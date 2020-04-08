@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Gluu Python Example</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Icons -->
+    <link href="https://ps.w.org/openid-connect-sso-by-gluu/assets/icon-128x128.png" rel="icon">
+    <link href="/https://ps.w.org/openid-connect-sso-by-gluu/assets/icon-128x128.png" rel="apple-touch-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--Custome CSS-->
+    <link href="https://fonts.googleapis.com/css?family=Markazi+Text:regular,500,600,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Philosopher:regular,italic,700,700italic" rel="stylesheet" />
+    <link href="/public/css/appstyle.css" rel="stylesheet">
+    <link href="/public/font-awesome/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+      <!-- <p>{{userinfo_pretty}}</p> -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="#menu-toggle" id="menu-toggle">Gluu</a>
+                    <a id="qsLogoutBtn" class="btn btn-primary btn-logout pull-right" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand mt-1">
+                    <p class="centered"><a href="#"><img src="https://ps.w.org/openid-connect-sso-by-gluu/assets/icon-128x128.png" width="60"></a></p>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-home" style="margin-right: 10px;"></i>Home</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-user"  style="margin-right: 10px;"></i>Profile</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-shield" style="margin-right: 10px;"></i>Change Password</a>
+                </li>
+                <li>
+                    <a class="dropdown-btn" id = "nav_hide" style="color: #999999;"><i class="fa fa-users" style="margin-right: 10px;"></i>User
+                        <i class="fa fa-caret-down"></i>
+                      </a>
+                      <div class="dropdown-container">
+                        <a href="#" id ="nav_hide"><i class="fa fa-address-card" style="margin-right: 10px;"></i>View Users</a>
+                        <a href="#" id ="nav_hide"><i class="fa fa-user-plus" style="margin-right: 10px;"></i>Add User</a>
+                        <a href="#" id ="nav_hide"><i class="fa fa-user-circle" style="margin-right: 10px;"></i>Manage Role</a>
+                      </div>
+                </li>
+                <li>
+                    <a href="/profile" id ="nav_hide"><i class="fa fa-th-list" style="margin-right: 10px;"></i>Log</a>
+                </li>
+                <li>
+                    <a href="#" id ="nav_hide"><i class="fa fa-id-card" style="margin-right: 10px;"></i>SSO Mapping</a>
+                </li>
+                <li>
+                    <a href="#" id ="nav_hide"><i class="fa fa-list" style="margin-right: 10px;"></i>Login History</a>
+                </li>
+                <li>
+                    <a href="#" id ="nav_hide"><i class="fa fa-file" style="margin-right: 10px;"></i>Support Guide</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    </div>
+ 
+    <!--Form Start-->
+    <div class="container">
+               {%- for message in get_flashed_messages() %}
+               <h2> {{ message }}</h2>
+                {%- endfor %}
+        <div class="row py-5 mt-4 align-items-center">
+            <!-- For Demo Purpose -->
+            <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+                <img src="https://support.gluu.org/static/img/logo.png" alt="" class="img-fluid mb-4 d-none d-md-block">
+                <h1>Welcome {{userinfo['name']}}</h1>
+                <p class="font-italic text-muted mb-0">Gluu Python Example.</p>
+                <p class="font-italic text-muted mb-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+            </div>
+    
+            <!-- Registeration Form -->
+            <div class="col-md-7 col-lg-6 ml-auto">
+                <h2>Change Profile</h2>
+                <form action="/" method="POST"> 
+                    <div class="row">
+    
+                        <!-- First Name -->
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-user text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="firstName" type="text" name="firstname" value="{{userinfo['givenName']}}" readonly class="form-control bg-white border-left-0 border-md">
+                        </div>
+    
+                        <!-- Last Name -->
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-user text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="lastName" type="text" name="lastname" value="{{userinfo['family_name']}}" readonly class="form-control bg-white border-left-0 border-md">
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-user-circle text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="name" type="text" name="name" value="{{userinfo['name']}}" readonly class="form-control bg-white border-left-0 border-md">
+                        </div>
+
+                        <!-- User Role -->
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-user text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="role" type="text" name="role" value="{{userinfo['role']}}" readonly class="form-control bg-white border-left-0 border-md">
+                        </div>
+    
+                        <!-- Email Address -->
+                        <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-envelope text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="email" type="email" name="email" value="{{userinfo['email']}}" readonly class="form-control bg-white border-left-0 border-md">
+                        </div>
+
+                        <!-- User_Id -->
+                        <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-address-card text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="user_id" type="text" name="Sub" value="{{userinfo['user_id']}}" readonly class="form-control bg-white border-left-0 border-md">
+                        </div>
+
+                        <!-- password -->
+                        <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-pencil text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="password" type="text" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md">
+                        </div>
+
+                        
+
+                        <!-- Submit Button -->
+                        <div class="form-group col-lg-6 mx-auto mb-4">
+                            <!-- <a href="#" class="btn btn-primary btn-block py-2"> -->
+                                <input type="submit" name="Submit" class="btn btn-primary btn-block py-2" value="Save">
+                            </a>
+                        </div>
+                        
+                        <div class="form-group col-lg-6 mx-auto mb-4">
+                            <a href="#" class="btn btn-danger btn-block py-2">
+                                <span class="font-weight-bold">Cancel</span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/Form End-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+    <script>
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+        
+        for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+          dropdownContent.style.display = "none";
+          } else {
+          dropdownContent.style.display = "block";
+          }
+          });
+        }
+    </script>
+    <script>
+        $(document).ready(function(){
+            var role = "{{ userinfo['role'] }}" ;   
+            // console.log('Role' + role);
+            // var a = "abc";
+            // alert(role);
+            if(role == "user") {
+                $('[id= nav_hide]').hide();
+            }
+        });
+    </script>
+  </body>
+</html>

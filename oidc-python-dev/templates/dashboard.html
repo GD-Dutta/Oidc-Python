@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- font awesome from BootstrapCDN -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <!-- Custom style for this page -->
+        <link href="/public/css/app.css" rel="stylesheet">
+
+    </head>
+    <body class="home">
+      <section id="container">
+            <div class="login-page clearfix">
+                <div class="logged-in-box auth0-box logged-in">
+                    <h1 id="logo"><img src="https://support.gluu.org/static/img/logo.png" /></h1>
+                    <img class="avatar" src="{{userinfo['picture']}}"/>
+                     <h2>Welcome {{userinfo['name']}}</h2> 
+                     <!-- <pre>{{userinfo_pretty}}</pre>  -->
+                    <table align="center">
+                        <tr>
+                          <th>User ID</th>
+                          <th>Name</th>
+                          <th>Family Name</th>
+                          <th>Given Name</th>
+                          <th>Email</th>
+                        </tr>
+                        <tr>
+                          <td>{{userinfo['user_id']}}</td>
+                          <td>{{userinfo['name']}}</td>
+                          <td>{{userinfo['family_name']}}</td>
+                          <td>{{userinfo['givenName']}}</td>
+                          <td>{{userinfo['email']}}</td>
+                        </tr>
+                    </table>
+                    <a id="qsLogoutBtn" class="btn btn-primary btn-lg btn-logout btn-block" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+      </section>
+    </body>
+</html>
+
+
